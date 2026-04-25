@@ -2,6 +2,7 @@
 
 一个温馨的虚拟宠物养成游戏，包含四只性格迥异的像素宠物，支持互动、事件触发和亲密度里程碑。
 
+<img width="1363" height="613" alt="image" src="https://github.com/user-attachments/assets/eb9eab0b-ac29-4abe-af07-178d9af3e2a5" />
 
 ## ✨ 功能特点
 

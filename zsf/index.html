@@ -960,32 +960,71 @@ const displayFinalPhoto = () => {
 
     function renderAlbum() {
       albumGrid.innerHTML = '';
+      // 先移除可能残留的旧提示
+      const oldMsg = document.querySelector('.album-empty-msg');
+      if (oldMsg) oldMsg.remove();
+
+      // 生成普通事件缩略图
       eventAlbum.forEach(id => {
         if (id === 'singing' || id === 'polaroid') return;
-        const ev = ALL_EVENTS.find(e => e.id === id); if (!ev) return;
+        const ev = ALL_EVENTS.find(e => e.id === id);
+        if (!ev) return;
         const img = document.createElement('img');
- img.src = EVENT_IMG_PATH(id);
- img.className = 'album-thumb';
- img.alt = ev.name; img.title = ev.desc;
-        img.onclick = () => { eventImage.src = EVENT_IMG_PATH(id); eventDesc.textContent = ev.desc; eventModal.style.display = 'flex'; albumModal.style.display = 'none'; };
+        img.src = EVENT_IMG_PATH(id);
+        img.className = 'album-thumb';
+        img.alt = ev.name;
+        img.title = ev.desc;
+        img.onclick = () => {
+          eventImage.src = EVENT_IMG_PATH(id);
+          eventDesc.textContent = ev.desc;
+          eventModal.style.display = 'flex';
+          albumModal.style.display = 'none';
+        };
         albumGrid.appendChild(img);
       });
+
+      // 祝福事件缩略图
       if (eventAlbum.includes('singing')) {
-        const img = document.createElement('img'); img.src = 'images/blessings/singing.webp'; img.className = 'album-thumb'; img.alt = '蛋糕合唱团'; img.title = '四小只围着蛋糕为少芳唱歌';
-        img.onclick = () => { eventImage.src = 'images/blessings/singing.webp'; eventDesc.textContent = '四小只一起为少芳唱生日歌！'; eventModal.style.display = 'flex'; albumModal.style.display = 'none'; };
+        const img = document.createElement('img');
+        img.src = 'images/blessings/singing.webp';
+        img.className = 'album-thumb';
+        img.alt = '蛋糕合唱团';
+        img.title = '四小只围着蛋糕为少芳唱歌';
+        img.onclick = () => {
+          eventImage.src = 'images/blessings/singing.webp';
+          eventDesc.textContent = '四小只一起为少芳唱生日歌！';
+          eventModal.style.display = 'flex';
+          albumModal.style.display = 'none';
+        };
         albumGrid.appendChild(img);
       }
       if (eventAlbum.includes('polaroid')) {
-        const img = document.createElement('img'); img.src = 'images/blessings/polaroid.webp'; img.className = 'album-thumb'; img.alt = '大合照'; img.title = '少芳与四小只的拍立得纪念';
-        img.onclick = () => { eventImage.src = 'images/blessings/polaroid.webp'; eventDesc.textContent = '少芳 & 四小只 · 永远 ❤️'; eventModal.style.display = 'flex'; albumModal.style.display = 'none'; };
+        const img = document.createElement('img');
+        img.src = 'images/blessings/polaroid.webp';
+        img.className = 'album-thumb';
+        img.alt = '大合照';
+        img.title = '少芳与四小只的拍立得纪念';
+        img.onclick = () => {
+          eventImage.src = 'images/blessings/polaroid.webp';
+          eventDesc.textContent = '少芳 & 四小只 · 永远 ❤️';
+          eventModal.style.display = 'flex';
+          albumModal.style.display = 'none';
+        };
         albumGrid.appendChild(img);
       }
-      if (albumGrid.children.length === 0) {
-        const msg = document.createElement('div'); msg.textContent = '📭 还没有事件记录，多陪四小只玩一会儿吧~';
-        msg.style.cssText = 'padding:20px;font-size:1.2rem;color:#5e3e28;'; albumGrid.appendChild(msg);
-      }
-    }
 
+      // 空状态处理：不放在网格内，独立展示
+      if (albumGrid.children.length === 0) {
+        albumGrid.style.display = 'none';
+        const msg = document.createElement('div');
+        msg.className = 'album-empty-msg';
+        msg.textContent = '📭 还没有事件记录，多陪四小只玩一会儿吧~';
+        msg.style.cssText = 'padding:20px;font-size:1.2rem;color:#5e3e28;text-align:center;';
+        albumGrid.parentNode.insertBefore(msg, closeAlbumBtn); // 放在关闭按钮上方
+      } else {
+        albumGrid.style.display = 'grid';
+      }
+   }
     setInterval(() => {
       const d = new Date();
       if (d.getMonth()===4 && d.getDate()===2 && d.getMinutes()===0 && d.getSeconds()<5) {

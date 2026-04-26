@@ -175,6 +175,17 @@
   font-size: 0.75rem;
   line-height: 1.4;
 }
+.thanks-list a {
+  color: #3b2a1c;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.thanks-list a:hover {
+  color: #8b5a2b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 
 .footer-bottom {
   font-size: 0.75rem;
@@ -270,11 +281,12 @@
       <div class="credit-row">
         <span class="credit-label">✧ 致谢 ✧</span>
         <div class="thanks-list">
-          <span>GitHub – 网站托管</span>
+          <span><a href="https://github.com/MY-Der/MY-Der.github.io.git" target="_blank" rel="noopener">GitHub – 网站托管</a></span>
           <span>Deepseek – 大纲&代码框架、后期调试</span>
           <span>豆包 – AI创作生图</span>
           <span>Canva &amp; 百度图片 &amp; 美图秀秀 – P图</span>
-          <span>Pixilart – 在线像素画创作</span>
+          <span><a href="https://www.pixilart.com/draw" target="_blank" rel="noopener">Pixilart – 在线像素画创作</a></span>
+          <span><a href="https://squoosh.app/" target="_blank" rel="noopener">Squoosh – 在线图片压缩</a></span>
           <span>小红书 – 蛋糕供图参考</span>
           <span>@映荷 – 人像供图参考</span>
         </div>
@@ -508,7 +520,7 @@
         if(!customText) addLog(`${PET_NAMES[petKey]}：${bubble.textContent}`, 'quote');
       }
       if(speechTimer) clearTimeout(speechTimer);
-      speechTimer = setTimeout(()=>{ document.querySelectorAll('.speech-bubble').forEach(b=>b.remove()); }, 4000);
+      speechTimer = setTimeout(()=>{ document.querySelectorAll('.pet-card .speech-bubble').forEach(b=>b.remove()); }, 4000);
     }
 
     function updateAllPetCards() {
@@ -731,91 +743,127 @@
     }
 
     function startFirstBlessing() {
-      if (blessingInProgress) return;
-      blessingInProgress = true;
-      celebLayer.style.display = 'flex';
-      celebContent.innerHTML = '';
-      celebContent.style.cssText = 'position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;';
-      let starCount = 0;
-      const starInterval = setInterval(() => { drawStarlight(); starCount++; if (starCount >= 3) clearInterval(starInterval); }, 600);
-      const cakeImg = document.createElement('img');
-      cakeImg.src = 'images/blessings/cake.webp';
-      cakeImg.style.cssText = 'position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:360px;max-width:90vw;image-rendering:pixelated;z-index:10;transition:top 2s ease-in;';
-celebContent.appendChild(cakeImg);
-      setTimeout(() => { cakeImg.style.top = '12%'; }, 50);
-      const miniContainer = document.createElement('div');
-miniContainer.style.cssText = 'position:absolute;bottom:12%;left:50%;transform:translateX(-50%);display:flex;gap:40px;align-items:flex-end;z-index:15;';
-miniContainer.style.display = 'none';
-      const miniImages = { dog: 'images/blessings/mini_dog.webp', cat1: 'images/blessings/mini_cat1.webp', cat2: 'images/blessings/mini_cat2.webp', fox: 'images/blessings/mini_fox.webp' };
-      const petOrder = [PET_TYPES.DOG, PET_TYPES.CAT2, PET_TYPES.FOX, PET_TYPES.CAT1];
-      const petBubbles = {};
-      petOrder.forEach(key => {
-        const wrapper = document.createElement('div'); wrapper.style.cssText = 'display:flex;flex-direction:column;align-items:center;position:relative;';
-        const img = document.createElement('img'); img.src = miniImages[key]; img.style.cssText = 'width:150px;height:150px;object-fit:contain;image-rendering:pixelated;'
-        const bubble = document.createElement('div'); bubble.className = 'speech-bubble';
-        bubble.style.cssText = 'position:absolute;bottom:100%;left:50%;transform:translateX(-50%);width:auto;max-width:550px;min-height:60px;font-size:1.0rem;padding:10px 15px;background:#fff9e6;border:4px solid #3b2a1c;white-space:normal;word-break:keep-all;overflow-wrap:break-word;text-align:center;display:none;line-height:1.4;overflow:visible;';
-        wrapper.appendChild(bubble); wrapper.appendChild(img); miniContainer.appendChild(wrapper);
-        petBubbles[key] = bubble;
-      });
-      celebContent.appendChild(miniContainer);
-      setTimeout(() => { miniContainer.style.display = 'flex'; }, 2000);
+  if (blessingInProgress) return;
+  blessingInProgress = true;
+  // 清除可能误伤演出气泡的定时器
+  if (speechTimer) { clearTimeout(speechTimer); speechTimer = null; }
 
-      const isBirthday = (new Date().getMonth() === 4 && new Date().getDate() === 2);
-      const lines = isBirthday ? [
-        { pet: PET_TYPES.DOG, text: quotes.dog.birthday },
-        { pet: PET_TYPES.CAT2, text: quotes.cat2.birthday },
-        { pet: PET_TYPES.FOX, text: quotes.fox.birthday },
-        { pet: PET_TYPES.CAT1, text: quotes.cat1.birthday }
-      ] : [
-        { pet: PET_TYPES.DOG, text: '汪汪！少芳生日快乐！' },
-        { pet: PET_TYPES.CAT2, text: '喵呜~蛋糕！蛋糕掉下来啦！' },
-        { pet: PET_TYPES.FOX, text: '呜……这是我们四个一起准备哒。' },
-        { pet: PET_TYPES.CAT1, text: '才不是为了你特意练习的……生日快乐。' }
-      ];
+  // 显示全屏演出层
+  celebLayer.style.display = 'flex';
+  celebContent.innerHTML = '';
+  celebContent.style.cssText = 'position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;';
 
-      let lineIndex = 0;
-      let firstLineAutoShown = false; // 防止重复自动触发
+  // 1. 星光闪烁 3 次
+  let starCount = 0;
+  const starInterval = setInterval(() => {
+    drawStarlight();
+    starCount++;
+    if (starCount >= 3) clearInterval(starInterval);
+  }, 600);
 
-      const clearAllBubbles = () => {
-        Object.values(petBubbles).forEach(b => { b.style.display = 'none'; b.textContent = ''; });
-      };
+  // 2. 蛋糕飘落动画
+  const cakeImg = document.createElement('img');
+  cakeImg.src = 'images/blessings/cake.webp';
+  cakeImg.style.cssText = 'position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:360px;max-width:90vw;image-rendering:pixelated;z-index:10;transition:top 2s ease-in;';
+  celebContent.appendChild(cakeImg);
+  setTimeout(() => { cakeImg.style.top = '12%'; }, 50);
 
-      const nextStep = () => {
-        if (lineIndex < lines.length) {
-          const { pet, text } = lines[lineIndex];
-          clearAllBubbles();
-          petBubbles[pet].textContent = text;
-          petBubbles[pet].style.display = 'block';
-          lineIndex++;
-        } else if (lineIndex === lines.length) {
-          celebLayer.onclick = null;
-          cakeImg.style.display = 'none';
-          miniContainer.style.display = 'none';
-          clearAllBubbles();
-          showSingingInteraction();
-          lineIndex++;
-        }
-      };
+  // 3. 四只迷你宠物插图容器（初始隐藏，蛋糕落下后显示）
+  const miniContainer = document.createElement('div');
+  miniContainer.style.cssText = 'position:absolute;bottom:12%;left:50%;transform:translateX(-50%);display:flex;gap:40px;align-items:flex-end;z-index:15;';
+  miniContainer.style.display = 'none';
+  const miniImages = {
+    dog: 'images/blessings/mini_dog.webp',
+    cat1: 'images/blessings/mini_cat1.webp',
+    cat2: 'images/blessings/mini_cat2.webp',
+    fox: 'images/blessings/mini_fox.webp'
+  };
+  const petOrder = [PET_TYPES.DOG, PET_TYPES.CAT2, PET_TYPES.FOX, PET_TYPES.CAT1];
+  const petBubbles = {};
 
-      // 绑定点击推进
-      celebLayer.onclick = nextStep;
+  petOrder.forEach(key => {
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'display:flex;flex-direction:column;align-items:center;position:relative;';
 
-      // 蛋糕落下后延迟自动显示第一句台词
-      setTimeout(() => {
-        if (!firstLineAutoShown && lineIndex === 0) {
-          firstLineAutoShown = true;
-          nextStep();
-        }
-      }, 3500);
+    const img = document.createElement('img');
+    img.src = miniImages[key];
+    img.style.cssText = 'width:150px;height:150px;object-fit:contain;image-rendering:pixelated;';
 
-      // 如果5秒后仍然没有台词，再强制触发一次
-      setTimeout(() => {
-        if (lineIndex === 0) {
-          firstLineAutoShown = true;
-          nextStep();
-        }
-      }, 5000);
+    const bubble = document.createElement('div');
+    bubble.className = 'speech-bubble';
+    bubble.style.cssText = 'position:absolute;bottom:100%;left:50%;transform:translateX(-50%);width:auto;max-width:550px;min-height:60px;font-size:1.0rem;padding:10px 15px;background:#fff9e6;border:4px solid #3b2a1c;white-space:normal;word-break:keep-all;overflow-wrap:break-word;text-align:center;display:none;line-height:1.4;overflow:visible;z-index:20;';
+
+    wrapper.appendChild(bubble);
+    wrapper.appendChild(img);
+    miniContainer.appendChild(wrapper);
+    petBubbles[key] = bubble;
+  });
+  celebContent.appendChild(miniContainer);
+
+  // 蛋糕下落2秒后显示迷你宠物
+  setTimeout(() => {
+    miniContainer.style.display = 'flex';
+  }, 2000);
+
+  // 4. 台词准备（生日当天使用彩蛋台词）
+  const isBirthday = (new Date().getMonth() === 4 && new Date().getDate() === 2);
+  const lines = isBirthday ? [
+    { pet: PET_TYPES.DOG, text: quotes.dog.birthday },
+    { pet: PET_TYPES.CAT2, text: quotes.cat2.birthday },
+    { pet: PET_TYPES.FOX, text: quotes.fox.birthday },
+    { pet: PET_TYPES.CAT1, text: quotes.cat1.birthday }
+  ] : [
+    { pet: PET_TYPES.DOG, text: '汪汪！少芳生日快乐！' },
+    { pet: PET_TYPES.CAT2, text: '喵呜~蛋糕！蛋糕掉下来啦！' },
+    { pet: PET_TYPES.FOX, text: '呜……这是我们四个一起准备哒。' },
+    { pet: PET_TYPES.CAT1, text: '才不是为了你特意练习的……生日快乐。' }
+  ];
+
+  let lineIndex = 0;
+  let firstLineShown = false; // 防止自动重复触发
+
+  const clearAllBubbles = () => {
+    Object.values(petBubbles).forEach(b => {
+      b.style.display = 'none';
+      b.textContent = '';
+    });
+  };
+
+  const nextStep = () => {
+    if (lineIndex < lines.length) {
+      const { pet, text } = lines[lineIndex];
+      clearAllBubbles();
+      petBubbles[pet].textContent = text;
+      petBubbles[pet].style.display = 'block';
+      lineIndex++;
+      firstLineShown = true;
+    } else if (lineIndex === lines.length) {
+      celebLayer.onclick = null;
+      cakeImg.style.display = 'none';
+      miniContainer.style.display = 'none';
+      clearAllBubbles();
+      showSingingInteraction();
+      lineIndex++;
     }
+  };
+
+  // 绑定点击推进
+  celebLayer.onclick = nextStep;
+
+  // 自动显示第一句台词（蛋糕落下后延迟3.5秒）
+  setTimeout(() => {
+    if (!firstLineShown && lineIndex === 0) {
+      nextStep();
+    }
+  }, 3500);
+
+  // 额外保险：5秒后仍未显示则强制触发
+  setTimeout(() => {
+    if (lineIndex === 0) {
+      nextStep();
+    }
+  }, 5000);
+}
 
     function showSingingInteraction() {
       celebContent.innerHTML = '';
@@ -852,6 +900,8 @@ miniContainer.style.display = 'none';
     function startSecondBlessing() {
       if (blessingInProgress) return;
       blessingInProgress = true;
+  // 清除可能误伤演出气泡的定时器
+  if (speechTimer) { clearTimeout(speechTimer); speechTimer = null; }
       celebLayer.style.display = 'flex';
       celebContent.innerHTML = '';
       celebContent.style.background = '#1a1a1a';

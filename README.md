@@ -20,26 +20,26 @@
 ## 🎮 如何游玩
 
 1. 直接打开 `index.html` 文件（现代浏览器均可）。
+   或在当前页面网址末端输入“/sf”（https://my-der.github.io/sf/）。
 2. 单击任意宠物卡片可选中它，之后的操作（喂食等）只对该宠物生效。
 3. 勾选「全体互动」后，操作将同时影响所有四只宠物。
 4. 通过下方按钮进行喂食、洗澡、玩耍，宠物头顶会冒出对话气泡。
-5. 查看右侧日志区了解属性变化和事件提示。
-6. 当亲密度达标时，右下角会出现「生日蛋糕」或「回顾合照」按钮，点击触发特殊动画。
+5. 查看下方日志区了解属性变化和事件提示。
+6. 当亲密度达标时，底部会出现「生日蛋糕」或「回顾合照」按钮，点击触发特殊动画。
 7. 点击「事件相册」可查看已解锁的剧情插画。
 
 ## 📁 文件与资源依赖
 
 本游戏为单个 HTML 文件，但需配合以下外部资源才能完全展示所有内容：
 
-- **宠物高清图片**：`images/pets/dog.jpg`、`images/pets/cat1.jpg`、`images/pets/cat2.jpg`、`images/pets/fox.jpg`  
-  若缺失，选中宠物时将只显示像素画，不影响游戏运行。
-- **事件插画**：`images/events/` 目录下以事件 ID 命名的 `.jpg` 文件（如 `grooming.jpg`），缺失时将显示图片加载失败。
+- **宠物高清图片**：`images/pets/dog.webp`、`images/pets/cat1.webp`、`images/pets/cat2.webp`、`images/pets/fox.webp`  
+- **事件插画**：`images/events/` 目录下以事件 ID 命名的 `.webp` 文件（如 `grooming.webp`）
 - **祝福资源**：
-  - `images/blessings/cake.png`
-  - `images/blessings/mini_dog.png`、`mini_cat1.png`、`mini_cat2.png`、`mini_fox.png`
-  - `images/blessings/singing.jpg`
-  - `images/blessings/polaroid.jpg`
-  缺失会导致对应动画无法完整显示，但游戏仍可正常操作。
+  - `images/blessings/cake.webp`
+  - `images/blessings/mini_dog.webp`、`mini_cat1.webp`、`mini_cat2.webp`、`mini_fox.webp`
+  - `images/blessings/singing.webp`
+  - `images/blessings/polaroid.webp`
+缺失会导致对应图片加载失败，动画无法完整显示，但游戏仍可正常操作。
 - **背景音乐**：`audio/happy_birthday.mp3`（生日歌）  
   缺失时点击蛋糕不会播放歌曲，不影响其他功能。
 

@@ -759,30 +759,62 @@ miniContainer.style.display = 'none';
       });
       celebContent.appendChild(miniContainer);
       setTimeout(() => { miniContainer.style.display = 'flex'; }, 2000);
+
       const isBirthday = (new Date().getMonth() === 4 && new Date().getDate() === 2);
-  const lines = isBirthday ? [
-    { pet: PET_TYPES.DOG, text: quotes.dog.birthday },
-    { pet: PET_TYPES.CAT2, text: quotes.cat2.birthday },
-    { pet: PET_TYPES.FOX, text: quotes.fox.birthday },
-    { pet: PET_TYPES.CAT1, text: quotes.cat1.birthday }
-  ] : [
-    { pet: PET_TYPES.DOG, text: '汪汪！少芳生日快乐！' },
-    { pet: PET_TYPES.CAT2, text: '喵呜~蛋糕！蛋糕掉下来啦！' },
-    { pet: PET_TYPES.FOX, text: '呜……这是我们四个一起准备哒。' },
-    { pet: PET_TYPES.CAT1, text: '才不是为了你特意练习的……生日快乐。' }
-  ];
+      const lines = isBirthday ? [
+        { pet: PET_TYPES.DOG, text: quotes.dog.birthday },
+        { pet: PET_TYPES.CAT2, text: quotes.cat2.birthday },
+        { pet: PET_TYPES.FOX, text: quotes.fox.birthday },
+        { pet: PET_TYPES.CAT1, text: quotes.cat1.birthday }
+      ] : [
+        { pet: PET_TYPES.DOG, text: '汪汪！少芳生日快乐！' },
+        { pet: PET_TYPES.CAT2, text: '喵呜~蛋糕！蛋糕掉下来啦！' },
+        { pet: PET_TYPES.FOX, text: '呜……这是我们四个一起准备哒。' },
+        { pet: PET_TYPES.CAT1, text: '才不是为了你特意练习的……生日快乐。' }
+      ];
+
       let lineIndex = 0;
-      const clearAllBubbles = () => { Object.values(petBubbles).forEach(b => { b.style.display = 'none'; b.textContent = ''; }); };
+      let firstLineAutoShown = false; // 防止重复自动触发
+
+      const clearAllBubbles = () => {
+        Object.values(petBubbles).forEach(b => { b.style.display = 'none'; b.textContent = ''; });
+      };
+
       const nextStep = () => {
         if (lineIndex < lines.length) {
-          const { pet, text } = lines[lineIndex]; clearAllBubbles();
-          petBubbles[pet].textContent = text; petBubbles[pet].style.display = 'block'; lineIndex++;
+          const { pet, text } = lines[lineIndex];
+          clearAllBubbles();
+          petBubbles[pet].textContent = text;
+          petBubbles[pet].style.display = 'block';
+          lineIndex++;
         } else if (lineIndex === lines.length) {
-          celebLayer.onclick = null; cakeImg.style.display = 'none'; miniContainer.style.display = 'none';
-          clearAllBubbles(); showSingingInteraction(); lineIndex++;
+          celebLayer.onclick = null;
+          cakeImg.style.display = 'none';
+          miniContainer.style.display = 'none';
+          clearAllBubbles();
+          showSingingInteraction();
+          lineIndex++;
         }
       };
+
+      // 绑定点击推进
       celebLayer.onclick = nextStep;
+
+      // 蛋糕落下后延迟自动显示第一句台词
+      setTimeout(() => {
+        if (!firstLineAutoShown && lineIndex === 0) {
+          firstLineAutoShown = true;
+          nextStep();
+        }
+      }, 3500);
+
+      // 如果5秒后仍然没有台词，再强制触发一次
+      setTimeout(() => {
+        if (lineIndex === 0) {
+          firstLineAutoShown = true;
+          nextStep();
+        }
+      }, 5000);
     }
 
     function showSingingInteraction() {

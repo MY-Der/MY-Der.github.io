@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>🐾 少芳的四小只 · 像素宠物乐园</title>
-<link rel="preload" as="image" href="images/pets/dog.jpg">
-<link rel="preload" as="image" href="images/pets/cat1.jpg">
-<link rel="preload" as="image" href="images/pets/cat2.jpg">
-<link rel="preload" as="image" href="images/pets/fox.jpg">
+<link rel="preload" as="image" href="images/pets/dog.WEBP">
+<link rel="preload" as="image" href="images/pets/cat1.WEBP">
+<link rel="preload" as="image" href="images/pets/cat2.WEBP">
+<link rel="preload" as="image" href="images/pets/fox.WEBP">
   <style>
     * { box-sizing: border-box; margin: 0; user-select: none; }
 
@@ -252,10 +252,10 @@
 <canvas id="effectCanvas" class="fullscreen-canvas" style="display:none;"></canvas>
 
 <footer class="game-footer">
-<img class="footer-corner tl" src="images/blessings/mini_dog.PNG" alt="小胡汪">
-<img class="footer-corner tr" src="images/blessings/mini_cat1.PNG" alt="灯神喵">
-<img class="footer-corner bl" src="images/blessings/mini_cat2.PNG" alt="璇宝咪">
-<img class="footer-corner br" src="images/blessings/mini_fox.PNG" alt="可可酱">
+<img class="footer-corner tl" src="images/blessings/mini_dog.WEBP" alt="小胡汪">
+<img class="footer-corner tr" src="images/blessings/mini_cat1.WEBP" alt="灯神喵">
+<img class="footer-corner bl" src="images/blessings/mini_cat2.WEBP" alt="璇宝咪">
+<img class="footer-corner br" src="images/blessings/mini_fox.WEBP" alt="可可酱">
   <div class="footer-content">
     <div class="footer-message">
       🎁 本页面是为少芳特别准备的2026生日惊喜，每一只小像素都代表着一段温暖的陪伴。
@@ -295,8 +295,8 @@
     const PET_NAMES = { dog:'小胡汪', cat1:'灯神喵', cat2:'璇宝咪', fox:'可可酱' };
 
     const HD_IMAGES = {
-      dog: 'images/pets/dog.JPG', cat1: 'images/pets/cat1.JPG',
-      cat2: 'images/pets/cat2.JPG', fox: 'images/pets/fox.JPG'
+      dog: 'images/pets/dog.WEBP', cat1: 'images/pets/cat1.WEBP',
+      cat2: 'images/pets/cat2.WEBP', fox: 'images/pets/fox.WEBP'
     };
 
     const quotes = {
@@ -365,7 +365,7 @@
     const ALL_EVENTS = [];
     for (let pair in PAIR_EVENTS) { PAIR_EVENTS[pair].forEach(ev => ALL_EVENTS.push(ev)); }
     ALL_EVENTS.push(SUNBATH_EVENT);
-    const EVENT_IMG_PATH = (id) => `images/events/${id}.JPG`;
+    const EVENT_IMG_PATH = (id) => `images/events/${id}.WEBP`;
 
     const DEFAULT_STATS = { full: 65, cleanliness: 70, mood: 80, affinity: 20 };
     let pets = {
@@ -730,14 +730,14 @@
       let starCount = 0;
       const starInterval = setInterval(() => { drawStarlight(); starCount++; if (starCount >= 3) clearInterval(starInterval); }, 600);
       const cakeImg = document.createElement('img');
-      cakeImg.src = 'images/blessings/cake.PNG';
+      cakeImg.src = 'images/blessings/cake.WEBP';
       cakeImg.style.cssText = 'position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:360px;max-width:90vw;image-rendering:pixelated;z-index:10;transition:top 2s ease-in;';
       cakeImg.loading='lazy';
 celebContent.appendChild(cakeImg);
       setTimeout(() => { cakeImg.style.top = '12%'; }, 50);
       const miniContainer = document.createElement('div');
       miniContainer.style.cssText = 'display:none;position:absolute;bottom:12%;left:50%;transform:translateX(-50%);display:flex;gap:40px;align-items:flex-end;z-index:15;';
-      const miniImages = { dog: 'images/blessings/mini_dog.PNG', cat1: 'images/blessings/mini_cat1.PNG', cat2: 'images/blessings/mini_cat2.PNG', fox: 'images/blessings/mini_fox.PNG' };
+      const miniImages = { dog: 'images/blessings/mini_dog.WEBP', cat1: 'images/blessings/mini_cat1.WEBP', cat2: 'images/blessings/mini_cat2.WEBP', fox: 'images/blessings/mini_fox.WEBP' };
       const petOrder = [PET_TYPES.DOG, PET_TYPES.CAT2, PET_TYPES.FOX, PET_TYPES.CAT1];
       const petBubbles = {};
       petOrder.forEach(key => {
@@ -780,7 +780,7 @@ img.loading='lazy';
     function showSingingInteraction() {
       celebContent.innerHTML = '';
       celebContent.style.cssText = 'position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;';
-      const singingImg = document.createElement('img'); singingImg.src = 'images/blessings/singing.JPG';
+      const singingImg = document.createElement('img'); singingImg.src = 'images/blessings/singing.WEBP';
       singingImg.style.cssText = 'max-width:80%;max-height:70%;object-fit:contain;border:8px solid #ad7e4b;image-rendering:pixelated;cursor:pointer;';
 singingImg.loading='lazy';
       const tip = document.createElement('div'); tip.textContent = '✨ 点击蛋糕听四小只唱歌，或点击空白处结束 ✨';
@@ -817,7 +817,7 @@ singingImg.loading='lazy';
       celebContent.innerHTML = '';
       celebContent.style.background = '#1a1a1a';
       celebContent.style.cssText = 'position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;';
-      const miniImages = { dog: 'images/blessings/mini_dog.PNG', cat1: 'images/blessings/mini_cat1.PNG', cat2: 'images/blessings/mini_cat2.PNG', fox: 'images/blessings/mini_fox.PNG' };
+      const miniImages = { dog: 'images/blessings/mini_dog.WEBP', cat1: 'images/blessings/mini_cat1.WEBP', cat2: 'images/blessings/mini_cat2.WEBP', fox: 'images/blessings/mini_fox.WEBP' };
       const petOrder = [PET_TYPES.DOG, PET_TYPES.CAT2, PET_TYPES.FOX, PET_TYPES.CAT1];
       const petWrappers = {};
       const miniContainer = document.createElement('div'); miniContainer.style.cssText = 'display:flex;gap:40px;align-items:flex-end;z-index:15;';
@@ -838,7 +838,7 @@ img.loading='lazy';
       const showPolaroid = () => {
         const frame = document.createElement('div');
         frame.style.cssText = 'position:absolute;left:50%;top:100%;transform:translate(-50%,0);transition:all 0.8s cubic-bezier(0.25,0.1,0.25,1);background:#f0e6d2;padding:20px 20px 30px;border:12px solid white;box-shadow:15px 15px 0 #2e241a;max-width:600px;width:80%;text-align:center;z-index:30;';
-        const photo = document.createElement('img'); photo.src = 'images/blessings/polaroid.JPG';
+        const photo = document.createElement('img'); photo.src = 'images/blessings/polaroid.WEBP';
         photo.style.cssText = 'width:100%;image-rendering:pixelated;border:3px solid #5a4a36;';
 photo.loading='lazy';
         const caption = document.createElement('div'); caption.style.cssText = 'margin-top:20px;font-family:"Press Start 2P",monospace;font-size:0.9rem;line-height:2.0;color:#2d1f0f;letter-spacing:1px;text-shadow:2px 2px 0 #e0c8a5;background:rgba(255,248,230,0.7);padding:8px 16px;border:2px solid #5a4a36;display:inline-block;';
@@ -894,7 +894,7 @@ const displayFinalPhoto = () => {
       wrapper.style.cssText = 'display:flex;flex-direction:column;align-items:center;opacity:0;transition:opacity 1.2s ease-in;';
 
       const img = document.createElement('img');
-      img.src = 'images/blessings/polaroid1.JPG';
+      img.src = 'images/blessings/polaroid1.WEBP';
       img.style.cssText = 'max-width:90%;max-height:70vh;aspect-ratio:16/9;object-fit:contain;image-rendering:pixelated;border:6px solid #f0e6d2;box-shadow:8px 8px 0 #2e241a;';
 img.loading='lazy';
 
@@ -936,13 +936,13 @@ img.loading='lazy';
         albumGrid.appendChild(img);
       });
       if (eventAlbum.includes('singing')) {
-        const img = document.createElement('img'); img.src = 'images/blessings/singing.JPG'; img.className = 'album-thumb'; img.alt = '蛋糕合唱团'; img.title = '四小只围着蛋糕为少芳唱歌';
-        img.onclick = () => { eventImage.src = 'images/blessings/singing.JPG'; eventDesc.textContent = '四小只一起为少芳唱生日歌！'; eventModal.style.display = 'flex'; albumModal.style.display = 'none'; };
+        const img = document.createElement('img'); img.src = 'images/blessings/singing.WEBP'; img.className = 'album-thumb'; img.alt = '蛋糕合唱团'; img.title = '四小只围着蛋糕为少芳唱歌';
+        img.onclick = () => { eventImage.src = 'images/blessings/singing.WEBP'; eventDesc.textContent = '四小只一起为少芳唱生日歌！'; eventModal.style.display = 'flex'; albumModal.style.display = 'none'; };
         albumGrid.appendChild(img);
       }
       if (eventAlbum.includes('polaroid')) {
-        const img = document.createElement('img'); img.src = 'images/blessings/polaroid.JPG'; img.className = 'album-thumb'; img.alt = '大合照'; img.title = '少芳与四小只的拍立得纪念';
-        img.onclick = () => { eventImage.src = 'images/blessings/polaroid.JPG'; eventDesc.textContent = '少芳 & 四小只 · 永远 ❤️'; eventModal.style.display = 'flex'; albumModal.style.display = 'none'; };
+        const img = document.createElement('img'); img.src = 'images/blessings/polaroid.WEBP'; img.className = 'album-thumb'; img.alt = '大合照'; img.title = '少芳与四小只的拍立得纪念';
+        img.onclick = () => { eventImage.src = 'images/blessings/polaroid.WEBP'; eventDesc.textContent = '少芳 & 四小只 · 永远 ❤️'; eventModal.style.display = 'flex'; albumModal.style.display = 'none'; };
         albumGrid.appendChild(img);
       }
       if (albumGrid.children.length === 0) {

@@ -744,7 +744,8 @@
 celebContent.appendChild(cakeImg);
       setTimeout(() => { cakeImg.style.top = '12%'; }, 50);
       const miniContainer = document.createElement('div');
-      miniContainer.style.cssText = 'display:none;position:absolute;bottom:12%;left:50%;transform:translateX(-50%);display:flex;gap:40px;align-items:flex-end;z-index:15;';
+miniContainer.style.cssText = 'position:absolute;bottom:12%;left:50%;transform:translateX(-50%);display:flex;gap:40px;align-items:flex-end;z-index:15;';
+miniContainer.style.display = 'none';
       const miniImages = { dog: 'images/blessings/mini_dog.webp', cat1: 'images/blessings/mini_cat1.webp', cat2: 'images/blessings/mini_cat2.webp', fox: 'images/blessings/mini_fox.webp' };
       const petOrder = [PET_TYPES.DOG, PET_TYPES.CAT2, PET_TYPES.FOX, PET_TYPES.CAT1];
       const petBubbles = {};
@@ -933,7 +934,6 @@ const displayFinalPhoto = () => {
         const img = document.createElement('img');
  img.src = EVENT_IMG_PATH(id);
  img.className = 'album-thumb';
- img.loading='lazy';
  img.alt = ev.name; img.title = ev.desc;
         img.onclick = () => { eventImage.src = EVENT_IMG_PATH(id); eventDesc.textContent = ev.desc; eventModal.style.display = 'flex'; albumModal.style.display = 'none'; };
         albumGrid.appendChild(img);
@@ -980,6 +980,30 @@ const displayFinalPhoto = () => {
       closeAlbumBtn.onclick = ()=> albumModal.style.display='none';
       closeEventBtn.onclick = ()=> eventModal.style.display='none';
       addLog('系统：欢迎回来！四小只刚才睡了一觉，现在精神满满地等你呢~');
+
+function preloadEventImages() {
+  const urls = new Set();
+  // 添加所有普通事件图片
+  for (let pair in PAIR_EVENTS) {
+    PAIR_EVENTS[pair].forEach(ev => urls.add(EVENT_IMG_PATH(ev.id)));
+  }
+  // 添加特殊事件
+  urls.add(EVENT_IMG_PATH(SUNBATH_EVENT.id));
+  // 添加祝福相关图片（如果还没在其他地方预加载）
+  urls.add('images/blessings/singing.webp');
+  urls.add('images/blessings/polaroid.webp');
+  urls.add('images/blessings/polaroid1.webp');
+  
+  // 延迟预加载，避免阻塞首屏
+  setTimeout(() => {
+    urls.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, 3000);
+}
+
+preloadEventImages();
     }
     init();
   })();

@@ -39,9 +39,7 @@ https://my-der.github.io/zsf/
   - `images/blessings/mini_dog.webp`、`mini_cat1.webp`、`mini_cat2.webp`、`mini_fox.webp`
   - `images/blessings/singing.webp`
   - `images/blessings/polaroid.webp`
-缺失会导致对应图片加载失败，动画无法完整显示，但游戏仍可正常操作。
 - **背景音乐**：`audio/happy_birthday.mp3`（生日歌）  
-  缺失时点击蛋糕不会播放歌曲，不影响其他功能。
 
 > 💡 建议将上述图片和音频放入正确路径，以获得完整体验。若仅测试功能，可忽略部分资源，游戏核心逻辑依然可用。
 
